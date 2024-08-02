@@ -18,5 +18,11 @@ module "condition" {
   ]...)
 }
 
+module "dashboard" {
+  source = "./modules/Dashboards"
+  dashboards = var.dashboards
+}
+
+
 
 

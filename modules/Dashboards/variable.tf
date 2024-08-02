@@ -1,18 +1,16 @@
-variable "dashboard" {
+variable "dashboards" {
+  description = "Map of dashboards with their respective pages and widgets"
   type = map(object({
-    name = string
-    permissions = string
-
-    pages = map(object({
-      name = string
-
-      widget = list(object({
-        type  = string
-        title = string
-        x     = number
-        y     = number
-        width = number
-        height= number
+    name        = string
+    description = string
+    pages       = map(object({
+      name    = string
+      widgets = map(object({
+        type     = string
+        title    = string
+        row      = number
+        column   = number
+        settings = map(any)
       }))
     }))
   }))

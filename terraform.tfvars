@@ -1,3 +1,4 @@
+#---------------------------------------------------------Alerts-------------------------------------------------------------------------------------
 alerts = {
   frontend_policy = {
     policy = {
@@ -159,7 +160,7 @@ alerts = {
         critical_threshold             = 100
       },
       backend_condition_3 = {
-        account_id                     = 4438269
+        account_id                =   4438269
         type                           = "static"
         name                           = "Backend Condition 3"
         description                    = "Condition for backend metric 3."
@@ -192,4 +193,97 @@ alerts = {
 }
 
 #---------------------------------------------------------Dashboards---------------------------------------------------------------------------------
+dashboards = {
+  "dashboard_1" = {
+    name        = "Dashboard 1"
+    description = "HotelBooking-Dynamic-Dash"
+    pages = {
+      "page_1" = {
+        name = "Browser"
+        widgets = {
+          "widget_1" = {
+            type     = "nrql"
+            title    = "NRQL Widget"
+            row      = 1
+            column   = 1
+            settings = {
+              query      = "SELECT average(newrelic.timeslice.value) AS 'Ajax/ResponseTime' FROM Metric WHERE metricTimesliceName = 'Ajax/ResponseTime' AND `entity.guid` IN ('NDQzODI2OXxCUk9XU0VSfEFQUExJQ0FUSU9OfDEzODYxODk1NTg') FACET `entity.guid`"
+              account_id = 4438269
+            }
+          }
+         
+          "widget_3" = {
+            type     = "line"
+            title    = "Line Chart"
+            row      = 2
+            column   = 1
+            settings = {
+              query      = "SELECT count(newrelic.timeslice.value) AS 'Browser/Apdex' FROM Metric WHERE metricTimesliceName = 'Browser/Apdex' AND `entity.guid` IN ('NDQzODI2OXxCUk9XU0VSfEFQUExJQ0FUSU9OfDEzODYxODk1NTg') FACET `entity.guid`"
+              account_id = 4438269
+            }
+          }
+          "widget_4" = {
+            type     = "bar"
+            title    = "Bar Chart"
+            row      = 2
+            column   = 2
+            settings = {
+              query      = "SELECT rate(count(*), 1 minute) FROM PageView WHERE entityGuid IN ('NDQzODI2OXxCUk9XU0VSfEFQUExJQ0FUSU9OfDEzODYxODk1NTg') FACET appName"
+              account_id = 4438269
+            }
+          }
+        }
+      }
+      "page_2" = {
+        name = "APM"
+        widgets = {
+          "widget_5" = {
+            type     = "pie"
+            title    = "Pie Chart"
+            row      = 1
+            column   = 1
+            settings = {
+              query      = "SELECT (count(apm.service.error.count) / count(apm.service.transaction.duration)) * 100 AS 'Error %' FROM Metric WHERE entity.guid IN ('NDQzODI2OXxBUE18QVBQTElDQVRJT058MTM2NzMyMzg0Mg') FACET appName"
+              account_id = 4438269
+            }
+          }
+          "widget_6" = {
+            type     = "table"
+            title    = "Table Chart"
+            row      = 1
+            column   = 2
+            settings = {
+              query      = "SELECT average(apm.service.transaction.duration) * 1000 AS 'Response time (ms)' FROM Metric WHERE entity.guid IN ('NDQzODI2OXxBUE18QVBQTElDQVRJT058MTM2NzMyMzg0Mg') FACET appName"
+              account_id = 4438269
+            }
+          }
+          "widget_7" = {
+            type     = "area"
+            title    = "Area Chart"
+            row      = 2
+            column   = 1
+            settings = {
+              query      = "SELECT average(`apm.key.transaction.duration`) FROM Metric WHERE `entity.guid` IN ('NDQzODI2OXxBUE18QVBQTElDQVRJT058MTM2NzMyMzg0Mg') FACET `entity.guid`"
+              account_id = 4438269
+            }
+          }
+          "widget_8" = {
+            type     = "heatmap"
+            title    = "Heatmap"
+            row      = 2
+            column   = 2
+            settings = {
+              query      = "SELECT count(*) FROM Transaction FACET appName SINCE 1 day ago"
+              account_id = 4438269
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
+
+
 
